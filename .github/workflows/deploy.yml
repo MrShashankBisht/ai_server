@@ -1,0 +1,29 @@
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - main # Triggers when you push to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Remote SSH Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # The strict host key checking is bypassed by the action safely
+          script: |
+            # 1. Navigate to where your project is cloned on the server
+            # UPDATE THIS PATH to match your actual server directory
+            cd ~/development/ai/ai_server 
+            
+            # 2. Pull the latest code from GitHub
+            git pull origin main
+            
+            # 3. Rebuild only the Ktor application. 
+            # (Ollama and pgAdmin will be untouched and remain running)
+            docker compose -f ollama-aiserver.yaml up -d --build ai_gateway

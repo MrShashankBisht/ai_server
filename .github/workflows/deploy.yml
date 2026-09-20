@@ -26,4 +26,4 @@ jobs:
             
             # 3. Rebuild only the Ktor application. 
             # (Ollama and pgAdmin will be untouched and remain running)
-            docker compose -f ollama-aiserver.yaml up -d --build ai_gateway
+            docker compose -f ollama-aiserver.yaml up -d --build ai_server

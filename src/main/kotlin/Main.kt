@@ -49,7 +49,7 @@ val assistant: PortfolioAgent = AiServices.builder(PortfolioAgent::class.java)
 fun Application.configureRouting() {
     routing {
 
-        sse("/api/chat/stream") {
+        sse("/chat/stream") {
             // 1. In a real app, parse the incoming JSON request here for the user's prompt
             val prompt = "Tell me about your portfolio projects."
 
